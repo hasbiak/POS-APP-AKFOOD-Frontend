@@ -5,12 +5,9 @@
 </template>
 
 <style>
-@font-face {
-  font-family: 'Airbnb Cereal App';
-  src: url(./assets/font/AirbnbCerealBook.ttf);
-}
-
-#app {
-  font-family: Airbnb Cereal App, Helvetica, Arial, sans-serif;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 </style>

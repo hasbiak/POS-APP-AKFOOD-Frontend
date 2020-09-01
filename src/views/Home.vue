@@ -1,82 +1,871 @@
 <template>
   <div class="home">
+    <!-- <Navbar /> -->
+    <!-- <Navbar /> -->
     <b-container fluid>
+      <b-alert :show="alert" class="m-3" variant="success">{{ isMsg }}</b-alert>
       <b-row>
-        <b-col cols="12" lg="8" class="home-header">
-          <b-row>
-            <b-col cols="2" class="header-icon">
-              <img
-                src="@/assets/img/menu.png"
-                alt="toggle-menu"
-                v-b-toggle.sidebar-backdrop
-              />
-            </b-col>
-            <b-col cols="8" class="header-text">
-              <h1>Menu</h1>
-            </b-col>
-            <b-col cols="2" class="header-icon"></b-col>
-          </b-row>
-        </b-col>
-
-        <b-col cols="12" lg="4" class="cart-header">
-          <h2>
-            Cart
-            <b-badge>{{ cart }}</b-badge>
-          </h2>
-        </b-col>
-      </b-row>
-
-      <b-row>
-        <b-col cols="12" lg="8" class="container-menu">
-          <b-row class="menu-row">
-            <b-col
-              cols="12"
-              lg="4"
-              md="6"
-              v-for="(value, index) in product"
-              :key="index"
-              class="product-list"
+        <b-col sm="8">
+          <!-----wrap icon navbar-->
+          <b-row class="text-center container-nav">
+            <div class="nav1">
+              <img src="../assets/hamburger.png" alt />
+            </div>
+            <div class="nav2">Food Items</div>
+            <!-- ===============================SEARCH STARTS======================================= -->
+            <div
+              v-show="isSearch"
+              class="nav3 searchIcon"
+              @click="searchProduct()"
             >
-              <b-img :src="img" fluid />
-              <p>{{ value.product_name }}</p>
-              <p>
-                <strong>
-                  Rp.
-                  {{
-                    value.product_price
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-                  }}
-                </strong>
-              </p>
-              <b-button>Add to cart</b-button>
-            </b-col>
+              <img src="../assets/search.png" alt />
+            </div>
 
-            <div class="mt-3"></div>
+            <!-- <div v-show="!isSearch" class="nav3">
+              <b-form-input
+                size="sm"
+                v-on:submit.prevent="searchProduct"
+                v-model="search"
+                type="text"
+                placeholder="search item"
+              >
+                <b-button type="button" @click="searchProduct()">search</b-button>
+              </b-form-input>
+            </div>-->
+            <!-- ===============================SEARCH ENDS======================================= -->
+          </b-row>
+          <b-container fluid class="px-0">
+            <!-- wrap baris ke-2 -->
+            <b-row
+              class="text-center"
+              style="background: rgba(190, 195, 202, 0.3);"
+            >
+              <!-- wrap side -->
+              <b-col sm="1" class="px-0 container-side">
+                <div class="side mt-2">
+                  <router-link to="/">
+                    <img src="../assets/fork.png" alt />
+                  </router-link>
+                </div>
+                <div class="side">
+                  <router-link to="/History">
+                    <img src="../assets/clipboard.png" alt />
+                  </router-link>
+                </div>
+                <!-- =========================================MODAL ADD STARTS============================================================== -->
+                <div class="side" @click="$bvModal.show('bv-modal-examples')">
+                  <img src="../assets/add.png" alt />
+                  <b-modal id="bv-modal-examples" hide-footer style>
+                    <template v-slot:modal-title>Add Item</template>
+                    <b-form v-on:submit.prevent="addProduct">
+                      <b-input
+                        type="text"
+                        v-model="form.product_name"
+                        placeholder="Product Name"
+                      />
+                      <br />
+                      <b-input
+                        type="text"
+                        v-model="form.product_image"
+                        placeholder="Product Image"
+                      />
+                      <br />
+                      <b-input
+                        type="number"
+                        v-model="form.product_price"
+                        placeholder="Product Price"
+                      />
+                      <br />
+                      <b-input
+                        type="number"
+                        v-model="form.category_id"
+                        placeholder="Product category id"
+                      />
+                      <br />
+
+                      <b-input
+                        type="number"
+                        v-model="form.product_status"
+                        placeholder="Product status"
+                      />
+                      <br />
+
+                      <div>
+                        <b-button
+                          type="submit"
+                          class="mt-3"
+                          variant="primary"
+                          block
+                          @click="$bvModal.hide('bv-modal-examples')"
+                          >Add</b-button
+                        >
+                      </div>
+
+                      <div>
+                        <b-button
+                          class="mt-3"
+                          variant="danger"
+                          block
+                          @click="$bvModal.hide('bv-modal-examples')"
+                          >Cancel</b-button
+                        >
+                      </div>
+                    </b-form>
+                  </b-modal>
+                </div>
+                <!-- =========================================MODAL ADD ENDS============================================================== -->
+              </b-col>
+              <!-- wrap item start-->
+              <b-col sm="11">
+                <b-row class="container-sort">
+                  <b-col class="text-left">
+                    <!-- <b-form v-on:submit.prevent="sortProduct">
+                      <b-input
+                        v-model="sortBy"
+                        type="search"
+                        placeholder="Sort By"
+                      />
+                    </b-form>-->
+                    <b-dropdown
+                      size="sm"
+                      id="dropdown-1"
+                      text="Sort By"
+                      class="m-md-2"
+                    >
+                      <b-dropdown-item @click="sortByName()"
+                        >Name</b-dropdown-item
+                      >
+                      <b-dropdown-item @click="sortByPrice()"
+                        >Price</b-dropdown-item
+                      >
+                      <!-- <b-dropdown-item @click="sortById()">Id</b-dropdown-item> -->
+                    </b-dropdown>
+                  </b-col>
+
+                  <b-col>
+                    <b-form
+                      v-show="!isSearch"
+                      v-on:submit.prevent="searchProducts"
+                    >
+                      <b-input
+                        v-model="search"
+                        type="search"
+                        placeholder="Search Item"
+                      />
+                    </b-form>
+                  </b-col>
+                </b-row>
+                <!-- <b-container class="mt-2"> -->
+                <b-container fluid>
+                  <b-row>
+                    <b-col
+                      sm="4"
+                      v-for="(item, index) in products"
+                      :key="index"
+                    >
+                      <b-card
+                        style=" font-family: 'Montaga', serif, sans-serif;"
+                        v-bind:title="item.product_name"
+                        img-src="https://picsum.photos/600/300/?image=25"
+                        img-alt="Image"
+                        title-tag="h5"
+                        img-top
+                        img-height="170"
+                        tag="article"
+                        class="mb-2"
+                      >
+                        <!-- pakai div dan style utk selected -->
+                        <!-- <p v-if="checkCart(item)">
+                        <img src="../assets/tick.png" alt />
+                        </p>-->
+                        <!-- pakai div dan style utk selected -->
+                        <!-- <b-card-text>Rp.{{ item.product_price }}</b-card-text>
+
+                        <b-button
+                          size="sm"
+                          block
+                          variant="info"
+                          @click="addToCart(item)"
+                          >Add To Cart</b-button
+                        > -->
+                        <!-- ================================UPDATE============================================ -->
+                        <div @click="$bvModal.show('bv-modal-update')">
+                          <b-button
+                            size="sm"
+                            block
+                            variant="outline-success"
+                            id="show-btn"
+                            @click="setProduct(item)"
+                            >Update</b-button
+                          >
+                        </div>
+                        <!-- ================================UPDATE============================================ -->
+                        <b-button
+                          size="sm"
+                          block
+                          variant="outline-danger"
+                          @click="deleteProduct(item)"
+                          >Delete</b-button
+                        >
+                      </b-card>
+                    </b-col>
+                    <b-modal id="bv-modal-update" hide-footer style>
+                      <template v-slot:modal-title>Update Item</template>
+                      <b-form v-on:submit.prevent="addProduct">
+                        <b-input
+                          type="text"
+                          v-model="form.product_name"
+                          placeholder="Product Name"
+                        />
+                        <br />
+                        <b-input
+                          type="text"
+                          v-model="form.product_image"
+                          placeholder="Product Image"
+                        />
+                        <br />
+                        <b-input
+                          type="number"
+                          v-model="form.product_price"
+                          placeholder="Product Price"
+                        />
+                        <br />
+                        <b-input
+                          type="number"
+                          v-model="form.category_id"
+                          placeholder="Product category id"
+                        />
+                        <br />
+                        <b-input
+                          type="number"
+                          v-model="form.product_status"
+                          placeholder="Product status"
+                        />
+
+                        <br />
+
+                        <div @click="$bvModal.hide('bv-modal-update')">
+                          <b-button
+                            type="button"
+                            class="mt-3"
+                            variant="primary"
+                            block
+                            @click="patchProduct()"
+                            v-show="isUpdate"
+                            >Update</b-button
+                          >
+                        </div>
+                        <div>
+                          <b-button
+                            class="mt-3"
+                            variant="danger"
+                            block
+                            @click="$bvModal.hide('bv-modal-update')"
+                            >Cancel</b-button
+                          >
+                        </div>
+                      </b-form>
+                    </b-modal>
+                  </b-row>
+                </b-container>
+                <!-- ==============================PAGINATION STARTS================================== -->
+                <b-row align-h="center">
+                  <b-col sm="6">
+                    <b-pagination
+                      v-model="currentPage"
+                      :total-rows="rows"
+                      :per-page="limit"
+                      aria-controls="my-table"
+                      @change="handlePageChange"
+                    ></b-pagination>
+                  </b-col>
+                </b-row>
+                <!-- ==============================PAGINATION ENDS================================== -->
+                <!-- </b-container> -->
+              </b-col>
+              <!-- wrap item ends-->
+            </b-row>
+          </b-container>
+        </b-col>
+        <!-- ====================================CART STARTS================================================= -->
+        <b-col sm="4">
+          <b-row class="text-center container-cart">
+            <b-col sm class="m-auto">
+              <div>
+                Cart
+                <span class="badge">{{ count }}</span>
+              </div>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm class="text-center">
+              <div v-show="isAdded">
+                <img src="../assets/food.png" alt />
+                <div class="desc">
+                  <h3>Your cart is empty</h3>
+                  <p>Please add some item from the menu</p>
+                </div>
+              </div>
+              <!-- =========================COLUMN ADDTOCART START============================ -->
+              <b-container v-show="!isAdded" class="mt-2">
+                <div v-for="(value, index) in cart" :key="index">
+                  <b-row class="m-2 modals">
+                    <b-col sm="4">
+                      <img src="../assets/item1.png" alt style="width: 100%" />
+                    </b-col>
+                    <b-col sm="4">
+                      <b-row>{{ value.product_name }}</b-row>
+                      <b-row>
+                        <b-input-group>
+                          <b-input-group-prepend>
+                            <b-button
+                              size="sm"
+                              variant="outline-success"
+                              @click="decrementCart(value)"
+                              >-</b-button
+                            >
+                          </b-input-group-prepend>
+
+                          <b-form-input
+                            size="md"
+                            type="text"
+                            :value="value.order_qty"
+                          ></b-form-input>
+
+                          <b-input-group-append>
+                            <b-button
+                              size="sm"
+                              variant="outline-success"
+                              @click="incrementCart(value)"
+                              >+</b-button
+                            >
+                          </b-input-group-append>
+                        </b-input-group>
+                      </b-row>
+                    </b-col>
+                    <b-col sm="4"
+                      >Rp.{{ value.product_price * value.order_qty }}</b-col
+                    >
+                  </b-row>
+                  <!-- <b-row class="m-5">
+                  <h3>total :{{value.totalPrice}}</h3>
+                  </b-row>-->
+                </div>
+                <b-row class="modals">
+                  <b-col class="text-left">Total:</b-col>
+                  <b-col>Rp.{{ totals() }}</b-col>
+                </b-row>
+                <b-row>
+                  <b-col class="text-left" style="font-size:13px;"
+                    >*Belum termasuk ppn</b-col
+                  >
+                </b-row>
+
+                <!-- ==============================================CHECKOUT MODAL STARTS======================================== -->
+                <b-row
+                  id="show-btn"
+                  @click="$bvModal.show('checkOutModals')"
+                  class="mb-2"
+                >
+                  <b-button block @click="checkOut()" variant="info"
+                    >Checkout</b-button
+                  >
+
+                  <b-modal id="checkOutModals" hide-footer class="m-auto">
+                    <template v-slot:modal-title>CheckOut</template>
+                    <div>
+                      <b-row class="mb-3">
+                        <b-col class="text-left">Cashier : Pevita Pearce</b-col>
+                        <b-col class="text-right"
+                          >Receipt no: #{{ invoice }}</b-col
+                        >
+                      </b-row>
+                    </div>
+                    <div
+                      class="d block text-center modals"
+                      v-for="(value, index) in modalCekot"
+                      :key="index"
+                    >
+                      <b-row class="mb-2">
+                        <b-col class="text-left">
+                          {{ value.product_name }}
+                          {{ value.order_qty }}x
+                        </b-col>
+                        <b-col class="text-right"
+                          >Rp.{{ value.order_qty * value.product_price }}</b-col
+                        >
+                      </b-row>
+                    </div>
+                    <!-- <b-row>
+                      <b-col>Ppn 10%</b-col>
+                      <b-col class="text-right">{{ppn()}}</b-col>
+                    </b-row>-->
+                    <b-row>
+                      <b-col class="text-right modals"
+                        >Total + ppn 10%: Rp.{{ subTotal }}</b-col
+                      >
+                    </b-row>
+                    <div class="modals">Payment : Cash</div>
+                    <b-row>
+                      <b-col @click="cancel()">
+                        <b-button
+                          class="mt-3"
+                          variant="info"
+                          block
+                          @click="$bvModal.hide('checkOutModals')"
+                          >Print</b-button
+                        >
+                      </b-col>
+                    </b-row>
+
+                    <div class="text-center">Or</div>
+                    <b-row>
+                      <b-col @click="cancel()">
+                        <b-button block variant="warning">Sent Email</b-button>
+                      </b-col>
+                    </b-row>
+                  </b-modal>
+                </b-row>
+                <!-- ==============================================CHECKOUT MODAL ENDS========================================== -->
+
+                <b-row>
+                  <b-button variant="warning" block @click="cancel()"
+                    >Cancel</b-button
+                  >
+                </b-row>
+              </b-container>
+              <!-- =========================COLUMN ADDTOCART END============================ -->
+            </b-col>
           </b-row>
         </b-col>
-
-        <b-col cols="12" lg="4" class="cart-list-empty">
-          <img src="@/assets/img/empty-cart.png" alt />
-          <p>
-            Your cart is empty
-            <br />
-            <span class="text-muted">Please add some items from the menu</span>
-          </p>
-        </b-col>
+        <!-- ====================================CART ENDS================================================= -->
       </b-row>
-
-      <b-sidebar
-        id="sidebar-backdrop"
-        :title="msg"
-        backdrop-variant="dark"
-        backdrop
-        shadow
-      >
-        <Sidebar />
-      </b-sidebar>
     </b-container>
+    <b-form v-on:submit.prevent="checkOut">
+      <b-input></b-input>
+      <b-input></b-input>
+    </b-form>
+    <!-- <Card nama="susu" harga="20000" />
+    <Card nama="kopi" harga="25000" />-->
   </div>
+  <!-- modal -->
+  <!-- modal -->
 </template>
 
-<style scoped src="@/assets/css/style.css"></style>
+<script>
+// import Navbar from '../components/_base/Navbar'
+// import Navbar from '../components/_base/Navbar'
+// import Card from '../components/_base/Card'
+import axios from 'axios'
+export default {
+  name: 'Home',
+  components: {
+    // Navbar,
+    // Navbar
+    // Card
+  },
+  data() {
+    return {
+      count: 0,
+      invoice: 0,
+      cart: [],
+      page: 1,
+      limit: 6,
+      search: '',
+      products: [],
+      form: {
+        product_name: '',
+        product_image: '',
+        product_price: '',
+        category_id: '',
+        product_status: ''
+      },
+      // sortBy: '',
+      alert: false,
+      isMsg: '',
+      isUpdate: false,
+      product_id: '',
+      delAlert: false,
+      delMsg: '',
+      isAdded: true,
+      isSearch: true,
+      currentPage: 1,
+      totalData: null,
+      subTotal: 0,
+      modalCekot: {}
+    }
+  },
+  computed: {
+    rows() {
+      return this.totalData
+    }
+  },
+  created() {
+    this.get_product()
+  },
+  updated() {
+    console.log(`page : ${this.$route.query.page}`)
+    console.log(`sort by : ${this.$route.query.sort}`)
+    console.log(`limit : ${this.$route.query.limit}`)
+    console.log(`search : ${this.$route.query.name}`)
+  },
+  methods: {
+    sortByName() {
+      // this.sortBy = 'product_name'
+      this.$router.push(
+        `?sort=product_name&page=${this.page}&limit=${this.limit}&ascdsc=asc`
+      )
+      axios
+        .get(
+          `http://127.0.0.1:3001/product?sort=product_name&page=${this.page}&limit=${this.limit}&ascdsc=asc`
+        )
+        .then(response => {
+          this.products = response.data.data
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    sortByPrice() {
+      // this.sortBy = 'product_price'
+      this.$router.push(
+        `?sort=product_price&page=${this.page}&limit=${this.limit}&ascdsc=asc`
+      )
+      axios
+        .get(
+          `http://127.0.0.1:3001/product?sort=product_price&page=${this.page}&limit=${this.limit}&ascdsc=asc`
+        )
+        .then(response => {
+          this.products = response.data.data
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+
+    totals() {
+      let total = 0
+      this.cart.map(value => (total += value.product_price * value.order_qty))
+
+      return total
+    },
+    ppn() {
+      let tax = 0
+      this.cart.map(value => {
+        tax += value.product_price * value.order_qty
+        tax = tax * 0.1
+      })
+      return tax
+    },
+    handlePageChange(numberPage) {
+      this.$router.push(`?page=${numberPage}`)
+      this.page = numberPage
+      this.get_product()
+    },
+    incrementCart(data) {
+      // console.log(data) // item yang di klik
+      // console.log(this.cart) // array
+      const incrementData = this.cart.find(
+        value => value.product_id === data.product_id
+      )
+      // console.log(incrementData)
+      incrementData.order_qty += 1
+      this.count += 1
+    },
+    cancel() {
+      this.isAdded = true
+      this.cart.length = 0
+    },
+    decrementCart(data) {
+      const incrementData = this.cart.find(
+        value => value.product_id === data.product_id
+      )
+      incrementData.order_qty -= 1
+      if (incrementData.order_qty <= 0) {
+        this.isAdded = true
+      } else {
+        this.isAdded = false
+      }
+      this.count -= 1
+    },
+    checkCart(data) {
+      return this.cart.some(item => item.product_id === data.product_id)
+    },
+    addToCart(data) {
+      // console.log(data)
+      this.isAdded = false
+      const setCart = {
+        product_id: data.product_id,
+        product_name: data.product_name,
+        order_qty: 1,
+        product_price: data.product_price,
+        totalPrice: data.product_price
+      }
+      this.count += 1
+      this.cart = [...this.cart, setCart]
+    },
+    get_product() {
+      axios
+        .get(
+          `http://127.0.0.1:3001/product?page=${this.page}&limit=${this.limit}&ascdsc=asc`
+        )
+        .then(response => {
+          this.products = response.data.data
+          console.log(this.products)
+          this.totalData = response.data.pagination.totalData
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    sortProduct() {
+      this.$router.push(
+        `?sort=${this.sortBy}&page=${this.page}&limit=${this.limit}&ascdsc=asc`
+      )
+
+      axios
+        .get(
+          `http://127.0.0.1:3001/product?sort=${this.sortBy}&page=${this.page}&limit=${this.limit}&ascdsc=asc`
+        )
+        .then(response => {
+          this.products = response.data.data
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    searchProduct() {
+      this.isSearch = false
+    },
+    searchProducts() {
+      this.$router.push(`?name=${this.search}&limit=${this.limit}`)
+      axios
+        .get(
+          `http://127.0.0.1:3001/product/search?name=${this.search}&limit=${this.limit}`
+        )
+        .then(response => {
+          this.products = response.data.data
+          if (this.search.length < 1) {
+            this.isSearch = true
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    addProduct() {
+      axios
+        .post('http://127.0.0.1:3001/product', this.form)
+        .then(response => {
+          this.alert = true
+          this.isMsg = response.data.msg
+          setTimeout(() => {
+            this.alert = false
+          }, 3500)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      this.get_product()
+    },
+    checkOut() {
+      this.$router.push('?checkout')
+      const setCart = {
+        history: [...this.cart]
+      }
+
+      axios
+        .post('http://127.0.0.1:3001/history/CheckOut', setCart)
+        .then(response => {
+          this.modalCekot = response.data.data.orders
+          this.invoice = response.data.data.invoice
+          this.subTotal = response.data.data.subtotal
+          console.log(this.invoice)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    setProduct(data) {
+      console.log(data)
+      this.form = {
+        product_name: data.product_name,
+        product_price: data.product_price,
+        product_status: data.product_status,
+        category_id: data.category_id
+      }
+      this.isUpdate = true
+      this.product_id = data.product_id
+    },
+    patchProduct() {
+      console.log(this.product_id)
+      console.log(this.form)
+      this.isUpdate = false
+      axios
+        .patch(`http://127.0.0.1:3001/product/${this.product_id}`, this.form)
+        .then(response => {
+          this.alert = true
+          this.isMsg = response.data.msg
+          setTimeout(() => {
+            this.alert = false
+          }, 2000)
+          this.get_product()
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    deleteProduct(data) {
+      console.log(data.product_id)
+      axios
+        .delete(`http://127.0.0.1:3001/product/${data.product_id}`)
+        .then(response => {
+          this.delAlert = true
+          this.delMsg = response.data.msg
+          setTimeout(() => {
+            this.delAlert = false
+          }, 2000)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      this.get_product()
+    }
+  }
+}
+</script>
+
+<style scoped>
+* {
+  box-sizing: border-box;
+}
+@import url('https://fonts.googleapis.com/css2?family=Montaga&display=swap');
+
+.home {
+  text-align: center;
+}
+
+.container-nav {
+  width: auto;
+  height: 100px;
+  display: flex;
+  flex-flow: row wrap;
+  font-size: 30px;
+  font-family: 'Montaga', serif, sans-serif;
+  text-align: center;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.container-sort {
+  margin-top: 8px;
+  color: black;
+  width: auto;
+  height: 50px;
+  /* background: rgb(35, 162, 77); */
+  font-size: 18px;
+}
+
+.nav1 {
+  padding: 5px;
+  margin: auto;
+  flex: 1;
+}
+
+.nav2 {
+  margin: auto;
+  flex: 10;
+}
+
+.nav2 a {
+  color: black;
+  text-decoration: none;
+}
+
+.nav2 a:hover {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav3 {
+  padding: 5px;
+  margin: auto;
+  flex: 1;
+}
+
+.modals {
+  font-weight: bold;
+  font-family: 'Montaga', serif, sans-serif;
+}
+
+.searchIcon:hover {
+  cursor: pointer;
+}
+
+.container-cart {
+  font-family: 'Montaga', serif, sans-serif;
+  width: auto;
+  height: 100px;
+  font-size: 25px;
+  background: #ffffff;
+  box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
+}
+
+.badge {
+  color: white;
+  background-color: rgb(35, 162, 77);
+}
+
+.container-side {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-flow: row wrap;
+  background: #ffffff;
+  box-shadow: 0px 4px -5px rgba(0, 0, 0, 0.25);
+  align-content: flex-start;
+}
+
+.side {
+  font-family: 'Montaga', serif, sans-serif;
+  margin: auto;
+  padding: 15px 0px;
+  flex: 1;
+}
+
+.side:hover {
+  cursor: pointer;
+}
+
+.container-item {
+  font-family: 'Montaga', serif, sans-serif;
+  height: auto;
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+}
+
+/* .item-list {
+  flex: 1;
+} */
+
+img {
+  width: auto;
+}
+
+.desc {
+  font-family: 'Montaga', serif, sans-serif;
+}
+
+.desc p {
+  color: #cecece;
+}
+
+/* .modal {
+  font-family: "Airbnb Cereal App", Arial, Helvetica, sans-serif;
+} */
+</style>
