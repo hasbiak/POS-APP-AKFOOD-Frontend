@@ -1,381 +1,201 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col sm="12">
-        <!-----wrap icon navbar-->
-        <b-row class="text-center container-nav">
-          <div class="nav1">
-            <img src="../assets/hamburger.png" alt />
-          </div>
-          <div class="nav2">History</div>
-        </b-row>
-        <b-container fluid class="px-0">
-          <!-- wrap row-2 start-->
-          <b-row class="text-center">
-            <!-- wrap side -->
-            <b-col sm="1" class="px-0 container-side">
-              <div class="side mt-2">
-                <router-link to="/">
-                  <img src="../assets/fork.png" alt />
-                </router-link>
-              </div>
-              <div class="side">
-                <a href="history.html">
-                  <img src="../assets/clipboard.png" alt />
-                </a>
-              </div>
-              <div class="side">
-                <a href="#add" data-toggle="modal" data-target="#add">
-                  <img src="../assets/add.png" alt />
-                </a>
-              </div>
+  <div class="history">
+    <b-container fluid>
+      <b-row>
+        <b-col class="firstColumn" lg="12" md="12" sm="12" cols="12">
+          <b-row>
+            <b-col class="homeButton" lg md sm cols="2">
+              <img alt="Vue home" src="../assets/1.png" />
             </b-col>
-
-            <!-- wrap Main start -->
-            <b-col sm="11" class="mt-3">
-              <b-row>
-                <!-- wrap Card Start -->
-                <b-col sm class="container-card">
-                  <div class="rect1">
-                    <p>Today's Income</p>
-                    <h3>Rp.1000.000</h3>
-                    <p>+2% Yesterday</p>
-                    <div class="decor">
-                      <img src="../assets/circle.png" class="circle1" />
-                      <img src="../assets/circle.png" class="circle2" />
-                      <img src="../assets/circle.png" class="circle3" />
-                    </div>
-                  </div>
-                  <div class="rect2">
-                    <p>Orders</p>
-                    <h3>3.270</h3>
-                    <p>+5% Last Week</p>
-                    <div class="decor">
-                      <img src="../assets/circle.png" class="circle1" />
-                      <img src="../assets/circle.png" class="circle2" />
-                      <img src="../assets/circle.png" class="circle3" />
-                    </div>
-                  </div>
-                  <div class="rect3">
-                    <p>This Year Income</p>
-                    <h4>Rp. {{ yearIncome }}</h4>
-                    <p>+10% Last Year</p>
-                    <div class="decor">
-                      <img src="../assets/circle.png" class="circle1" />
-                      <img src="../assets/circle.png" class="circle2" />
-                      <img src="../assets/circle.png" class="circle3" />
-                    </div>
-                  </div>
-                </b-col>
-                <!-- wrap Card End -->
-              </b-row>
-              <!-- Revenue start-->
-              <b-row>
-                <b-col sm="12" class="mt-5">
-                  <div class="revenue">
-                    <b-row class="p-4">
-                      <b-col sm="10" class="text-left">
-                        <h3>Revenue</h3>
-                      </b-col>
-                      <b-col sm="2" class="text-center">
-                        <b-dropdown text="Filter By">
-                          <b-dropdown-item @click="getHistory()"
-                            >Month</b-dropdown-item
-                          >
-                          <b-dropdown-item @click="getHistoryYear()"
-                            >Year</b-dropdown-item
-                          >
-                        </b-dropdown>
-                      </b-col>
-                    </b-row>
-
-                    <line-chart
-                      v-show="popM"
-                      xtitle="Date"
-                      ytitle="Total"
-                      :data="chartMonth"
-                    ></line-chart>
-                    <line-chart
-                      v-show="popY"
-                      xtitle="Month"
-                      ytitle="Total"
-                      :data="chartYear"
-                    ></line-chart>
-                  </div>
-                </b-col>
-              </b-row>
-              <!-- Revenue end-->
-              <!-- Recent Order start-->
-              <b-row class="mt5">
-                <b-col xl="12" class="mt-5">
-                  <div class="recent">
-                    <b-row class="p-4">
-                      <b-col sm="10" class="text-left">
-                        <h3>Recent Order</h3>
-                      </b-col>
-                      <b-col sm="2" class="text-center">
-                        <div>
-                          <b-dropdown
-                            id="dropdown-1"
-                            text="Select"
-                            class="m-md-2"
-                          >
-                            <b-dropdown-item>Today</b-dropdown-item>
-                            <b-dropdown-item>Yesterday</b-dropdown-item>
-                          </b-dropdown>
-                        </div>
-                      </b-col>
-                    </b-row>
-
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">INVOICE</th>
-                          <th scope="col">CASHIER</th>
-                          <th scope="col">DATE</th>
-                          <th scope="col">ORDERS</th>
-                          <th scope="col">AMOUNT</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="(value, index) in recent" :key="index">
-                          <!-- <th scope="row">1</th> -->
-                          <td>{{ value.invoice }}</td>
-                          <td>Pevita Pearce</td>
-                          <td>{{ history_created_at }}</td>
-                          <td>Ice Tea, Salad with Peanut Sauce</td>
-                          <td>{{ value.history_subtotal }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </b-col>
-              </b-row>
-              <!-- Recent Order end-->
+            <b-col class="history-header" lg="11" md="11" sm="11" cols="10">
+              <h2>History</h2>
             </b-col>
-            <!-- wrap Main end -->
           </b-row>
-          <!-- wrap row-2 end-->
-        </b-container>
-      </b-col>
-    </b-row>
-    <b-button @click="getHistory()">TESTING</b-button>
-  </b-container>
+        </b-col>
+      </b-row>
+      <b-row>
+        <Navbar />
+        <b-col class="historyBg" lg md sm xs>
+          <b-container class="grid-container">
+            <b-col class="box1">
+              <div class="incomeorder">Today's Income</div>
+              <div class="numberamount">Rp. {{ todayIncome.incomes }}</div>
+              <div class="percentage">
+                {{ todayIncome.incomeYesterday }} Yesterday
+              </div>
+            </b-col>
+            <b-col class="box2">
+              <div class="incomeorder">Orders</div>
+              <div class="numberamount">{{ orderCount.countThisWeek }}</div>
+              <div class="percentage">
+                {{ orderCount.countLastWeek }} Last Week
+              </div>
+            </b-col>
+            <b-col class="box3">
+              <div class="incomeorder">This Year's Income</div>
+              <div class="numberamount">
+                Rp. {{ yearlyIncome.countThisYear }}
+              </div>
+              <div class="percentage">
+                {{ yearlyIncome.countLastYear }} Last Year
+              </div>
+            </b-col>
+            <b-col class="box4">
+              <div class="revenue">Revenue</div>
+              <div class="month">
+                <b-form>
+                  <b-form-select
+                    v-model="months"
+                    text="Month"
+                    :options="monthoptions"
+                    @change="handleChart"
+                  ></b-form-select>
+                </b-form>
+              </div>
+              <div class="chart">
+                <line-chart
+                  class="line-chart"
+                  width="auto"
+                  height="300px"
+                  legend="bottom"
+                  :data="datas"
+                  label="This Month"
+                ></line-chart>
+              </div>
+            </b-col>
+            <b-col class="box5">
+              <div class="recent">Recent Order</div>
+              <div class="today">
+                <div>
+                  <b-form-select
+                    v-model="dateNow"
+                    text="Date"
+                    :options="options"
+                    @change="handleTable"
+                  ></b-form-select>
+                </div>
+              </div>
+              <b-container class="tables">
+                <b-table
+                  class="tableOrder"
+                  striped
+                  hover
+                  :items="perDay"
+                  :fields="fields"
+                  :per-page="perPage"
+                  :current-page="currentPage"
+                ></b-table>
+                <div class="paginations">
+                  <b-pagination
+                    v-model="currentPage"
+                    :total-rows="rowes"
+                    :per-page="perPage"
+                    size="md"
+                    class="my-0"
+                    @change="handlePageChange"
+                  ></b-pagination>
+                </div>
+              </b-container>
+            </b-col>
+          </b-container>
+        </b-col>
+      </b-row>
+    </b-container>
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
+import Navbar from '../components/_base/Navbar'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
-  name: 'history',
+  name: 'History',
   data() {
     return {
-      recent: {},
-      chartYear: [],
-      chartMonth: [],
-      popM: true,
-      popY: false,
-      yearIncome: null
+      dateNow: 'date',
+      interval: 0,
+      fields: [
+        { key: 'history_invoices', label: 'INVOICES' },
+        { key: 'cashier', label: 'CASHIER' },
+        { key: 'history_created_at', label: 'DATE' },
+        { key: 'orders', label: 'ORDERS' },
+        { key: 'history_subtotal', label: 'AMOUNT' }
+      ],
+      items: [],
+      months: 'MONTH(NOW())',
+      options: [
+        { value: 'date', text: 'Today' },
+        { value: 'week', text: 'This Week' },
+        { value: 'month', text: 'This Month' }
+      ],
+      monthoptions: [
+        { value: 'MONTH(NOW())', text: 'This Month' },
+        { value: '1', text: 'January' },
+        { value: '2', text: 'February' },
+        { value: '3', text: 'March' },
+        { value: '4', text: 'April' },
+        { value: '5', text: 'May' },
+        { value: '6', text: 'June' },
+        { value: '7', text: 'July' },
+        { value: '8', text: 'August' },
+        { value: '9', text: 'September' },
+        { value: '10', text: 'October' },
+        { value: '11', text: 'November' },
+        { value: '12', text: 'December' }
+      ],
+      currentPage: 1
+    }
+  },
+
+  components: {
+    Navbar
+  },
+  computed: {
+    ...mapGetters({
+      todayIncome: 'getIncome',
+      orderCount: 'getCount',
+      yearlyIncome: 'getYearly',
+      month: 'getMonthly',
+      datas: 'getDatas',
+      date: 'getDate',
+      perDay: 'getPerDay',
+      totalRow: 'getRows',
+      perPage: 'getPerPage'
+    }),
+    rowes() {
+      return this.totalRow
     }
   },
   created() {
-    this.getHistory()
+    this.getIncomeToday()
+    this.getOrderCount()
+    this.getHistoryPerDay()
+    this.getIncomeYearly()
+    this.getChartMonthly()
   },
+
   methods: {
-    getHistory() {
-      this.popM = true
-      this.popY = false
-      axios
-        .get(
-          'http://127.0.0.1:3001/history?sort=history_id&limit=5&page=1&ascdsc=DESC'
-        )
-        .then(response => {
-          const month = response.data.pagination.getMonth
-          month.map(item => this.chartMonth.push([item.date, item.subtotal]))
-          // console.log(response.data.pagination.getYear[0].subtotal)
-          this.yearIncome = response.data.pagination.getYear[0].subtotal
-          console.log(this.yearIncome)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    ...mapActions([
+      'getIncomeToday',
+      'getOrderCount',
+      'getIncomeYearly',
+      'getChartMonthly',
+      'getHistoryPerDay'
+    ]),
+    ...mapMutations(['setMonth', 'setDate', 'setPages']),
+    handlePageChange(event) {
+      this.setPages(event)
+      this.getHistoryPerDay()
     },
-    getHistoryYear() {
-      this.popM = false
-      this.popY = true
-      axios
-        .get(
-          'http://127.0.0.1:3001/history?sort=history_id&limit=5&page=1&ascdsc=DESC'
-        )
-        .then(response => {
-          const year = response.data.pagination.getYear
-          year.map(item => this.chartYear.push([item.month, item.subtotal]))
-          console.log(this.chartYear)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    handleTable(event) {
+      this.setDate(event)
+      this.getHistoryPerDay()
+    },
+    handleChart(event) {
+      this.setMonth(event)
+      this.getChartMonthly()
     }
   }
 }
 </script>
 
-<style scoped>
-.container-nav {
-  width: auto;
-  height: 100px;
-  display: flex;
-  flex-flow: row wrap;
-  font-size: 30px;
-  font-family: 'Montaga', serif, sans-serif;
-  text-align: center;
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-.nav1 {
-  padding: 5px;
-  margin: auto;
-  flex: 1;
-}
-
-.nav2 {
-  margin: auto;
-  flex: 11;
-}
-
-.nav2 a {
-  color: black;
-  text-decoration: none;
-}
-
-.nav2 a:hover {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.container-side {
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-flow: row wrap;
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-  align-content: flex-start;
-}
-
-.side {
-  margin: auto;
-  padding: 15px;
-  flex: 1;
-}
-
-.container-card {
-  height: auto;
-  display: flex;
-  flex-flow: row wrap;
-  align-content: center;
-  font-family: 'Montaga', serif, sans-serif;
-  text-align: left;
-}
-
-.rect1 {
-  margin: 4px;
-  padding: 20px;
-
-  min-width: 200px;
-  max-height: 213px;
-  flex: 1;
-  background: linear-gradient(
-    278.29deg,
-    #fbb2b4 30.05%,
-    rgba(255, 143, 178, 0) 133.19%
-  );
-  filter: drop-shadow(10px 15px 10px rgba(255, 143, 178, 0.25));
-  border-radius: 10px;
-}
-
-.rect2 {
-  margin: 4px;
-  padding: 20px;
-
-  min-width: 200px;
-  max-height: 213px;
-  flex: 1;
-  background: linear-gradient(
-    278.29deg,
-    #29dfff 30.05%,
-    rgba(41, 223, 255, 0) 133.19%
-  );
-  filter: drop-shadow(10px 15px 10px rgba(41, 223, 255, 0.25));
-  border-radius: 10px;
-}
-
-.rect3 {
-  margin: 4px;
-  padding: 20px;
-
-  min-width: 200px;
-  max-height: 213px;
-  flex: 1;
-  background: linear-gradient(
-    278.29deg,
-    #ab84c8 30.05%,
-    rgba(241, 201, 236, 0) 133.19%
-  );
-  filter: drop-shadow(10px 15px 10px rgba(241, 201, 236, 0.25));
-  border-radius: 10px;
-}
-
-.decor {
-  position: absolute;
-  width: 178px;
-  height: 141px;
-  left: 50%;
-  top: 0px;
-}
-
-.circle1 {
-  width: 75px;
-  position: relative;
-  top: 30%;
-}
-
-.circle2 {
-  width: 75px;
-  position: relative;
-  top: 10%;
-  right: 30%;
-}
-
-.circle3 {
-  width: 75px;
-  position: relative;
-  top: -5%;
-  right: 10%;
-}
-
-img {
-  width: auto;
-}
-
-.revenue {
-  min-width: auto;
-  height: auto;
-
-  background: #ffffff;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-}
-
-.recent {
-  height: auto;
-  background: #ffffff;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-}
-
-table {
-  width: 100%;
-}
-</style>
+<style src="../assets/css/history.css"></style>

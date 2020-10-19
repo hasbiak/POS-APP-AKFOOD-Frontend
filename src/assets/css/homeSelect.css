@@ -1,0 +1,738 @@
+.firstColumn {
+  border-bottom: 2px solid lightgrey;
+  position: relative;
+  max-width: 100%;
+  height: 70px;
+  padding-top: 10px;
+  z-index: 1;
+}
+
+.foodItems {
+  text-align: center;
+}
+
+.logoutButton {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  background-color: transparent;
+  border: none;
+}
+
+.logoutButton img {
+  max-width: 100%;
+  width: 20px;
+  height: auto;
+}
+.homeButton {
+  text-align: center;
+  padding-top: 5px;
+}
+
+.homeButton img {
+  max-width: 100%;
+  width: 35px;
+  height: auto;
+  text-align: center;
+}
+.searchButton {
+  max-width: 100%;
+  height: auto;
+  text-align: center;
+}
+
+.searchButton button {
+  max-width: 100%;
+  height: auto;
+  align-content: center;
+  background-color: transparent;
+  border: none;
+}
+
+.searchButton button img {
+  max-width: 100%;
+  width: 35px;
+  height: auto;
+  text-align: center;
+}
+
+.searchProduct {
+  font-size: 25px;
+  border: none;
+  background-color: transparent;
+  max-width: 100%;
+  height: auto;
+  width: 100%;
+}
+
+/* cart */
+.myCart {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  border-left: 3px outset white;
+  border-bottom: 2px outset whitesmoke;
+  position: relative;
+  padding-top: 10px;
+  z-index: 1;
+}
+
+.cartInside {
+  text-align: center;
+  padding: 20px;
+  max-width: 100%;
+
+  height: auto;
+}
+.cartInside img {
+  object-fit: contain;
+  width: 250px;
+  max-width: 100%;
+  height: auto;
+}
+.cartInside p {
+  font-size: 18px;
+  font-weight: bold;
+  opacity: 0.4;
+}
+
+/* Navbar */
+.sideHome {
+  border-right: 2px solid lightgrey;
+  padding-top: 20px;
+  display: grid;
+  grid-row-gap: 30px;
+  align-content: start;
+  position: relative;
+  z-index: 1;
+}
+.homeSide button {
+  max-width: 100%;
+  max-height: 100%;
+  align-content: center;
+  background-color: transparent;
+  border: none;
+  height: 60px;
+}
+
+.homeSide button img {
+  max-width: 100%;
+  max-height: 100%;
+  width: 50px;
+}
+
+/* Modal patch */
+.modal-body {
+  display: grid;
+}
+.buttonChange {
+  width: fit-content;
+  justify-self: center;
+}
+.formAdd {
+  display: grid;
+  height: auto;
+  grid-row-gap: 7px;
+  padding: 7px;
+  padding-bottom: 15px;
+}
+.formAdd input {
+  border: none;
+  border-radius: 5px 5px 5px 5px;
+  max-width: 100%;
+  height: 150%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.formAdd button {
+  border: none;
+  border-radius: 5px 5px 5px 5px;
+  background-color: #57cad5;
+  color: white;
+  max-width: 100%;
+  width: 20%;
+  height: 150%;
+  justify-self: end;
+}
+
+/* Modal delete */
+.modaldelete {
+  display: grid;
+  grid-template-rows: 50% 50%;
+  grid-template-columns: auto auto;
+  grid-template-areas:
+    'yousure yousure yousure'
+    'cancel . yes';
+}
+.youSure {
+  text-align: center;
+  grid-area: yousure;
+}
+.buttonCancelDel {
+  grid-area: cancel;
+}
+.buttonYesDel {
+  grid-area: yes;
+}
+
+/* Main */
+.productImage {
+  max-width: 100%;
+  height: 200px;
+}
+.productImage > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+}
+.flexs {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.gridbackground {
+  background-color: whitesmoke;
+  position: relative;
+  width: 100%;
+  padding: 20px;
+}
+.product-list {
+  overflow: scroll;
+  height: 500px;
+}
+.cards {
+  border-radius: 10px 10px;
+  border: none;
+}
+.mb-2 {
+  max-width: 100%;
+  height: auto;
+  background: transparent;
+  border-radius: 10px 10px;
+}
+.card-title {
+  font-size: 20px;
+  font-weight: normal;
+}
+.card-text {
+  font-size: 23px;
+  font-weight: bold;
+}
+.card-text::before {
+  content: 'Rp. ';
+}
+
+.select-image {
+  max-width: 100%;
+  width: 100%;
+  height: 200px;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 0;
+}
+.select-image .icon-select {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  z-index: 2;
+  top: 35%;
+  bottom: 65%;
+  left: 40%;
+  right: 60%;
+}
+.sortLimit {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Aside */
+.yourcart {
+  padding: 20px;
+}
+.theGrid {
+  display: grid;
+  height: 600px;
+}
+.gridbox1 {
+  display: grid;
+  align-content: start;
+  grid-row-gap: 20px;
+  max-width: 100%;
+  height: auto;
+  overflow: auto;
+}
+.orderboxes {
+  display: grid;
+  max-width: 100%;
+  height: 90px;
+
+  grid-template-rows: 65% 35%;
+  grid-template-columns: 25% 5% 10% 10% 10% 10%;
+  grid-template-areas:
+    'itema . itemb itemb itemb itemb itemc'
+    'itema . itemd iteme itemf . itemc';
+}
+.item-a {
+  max-width: 100%;
+  height: auto;
+  grid-area: itema;
+}
+.item-a img {
+  object-fit: cover;
+  border-radius: 5px 5px 5px 5px;
+  width: 100%;
+  height: 100%;
+}
+.item-b {
+  max-width: 100%;
+  height: auto;
+  grid-area: itemb;
+  font-weight: bold;
+  font-size: 18px;
+}
+.item-c {
+  display: grid;
+  text-align: end;
+  max-width: 100%;
+  height: auto;
+  grid-area: itemc;
+  font-weight: bold;
+}
+
+.item-cPrice {
+  align-self: end;
+}
+.item-cPrice p::before {
+  content: 'Rp. ';
+}
+.item-cPrice p {
+  font-size: 18px;
+  margin-bottom: 0;
+}
+.item-d {
+  border: 2px solid lightgreen;
+  text-align: center;
+  max-width: 100%;
+  height: auto;
+  grid-area: itemd;
+  font-size: 20px;
+}
+.item-d button {
+  display: block;
+  background-color: rgba(130, 222, 58, 0.2);
+  border: none;
+  color: #82de3a;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  padding-top: 0;
+}
+.item-d button img {
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+}
+.item-e {
+  border: 2px solid lightgreen;
+  text-align: center;
+  max-width: 100%;
+  height: 100%;
+  grid-area: iteme;
+  color: #82de3a;
+}
+.item-e h5 {
+  font-size: 23px;
+}
+.item-f {
+  border: 2px solid lightgreen;
+  text-align: center;
+  max-width: 100%;
+  height: auto;
+  grid-area: itemf;
+  font-size: 20px;
+}
+.item-f button {
+  display: block;
+  background-color: rgba(130, 222, 58, 0.2);
+  border: none;
+  color: #82de3a;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  padding-top: 0;
+}
+.item-f button img {
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+}
+.gridbox2 {
+  display: grid;
+  align-content: end;
+  grid-row-gap: 15px;
+}
+.totalP {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: auto;
+}
+.total {
+  text-align: start;
+  font-size: 20px;
+  font-weight: bold;
+}
+.totalnumber {
+  text-align: end;
+  font-size: 20px;
+  font-weight: bold;
+}
+.checkoutbutton button {
+  width: 100%;
+  background-color: #57cad5;
+  border: #57cad5;
+  border-radius: 0 0 0 0;
+  font-size: 25px;
+}
+.cancelbutton button {
+  width: 100%;
+  background-color: #f24f8a;
+  border: #f24f8a;
+  border-radius: 0 0 0 0;
+  font-size: 25px;
+}
+
+.firstRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 70px;
+}
+.secondRow {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: auto;
+}
+.loopProduct {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.secondHalfRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 30px;
+}
+
+.thirdRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.fourthRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: 50px;
+}
+.sixthRow h6 {
+  text-align: center;
+}
+.buttonPrint {
+  width: 100%;
+  background-color: blue;
+}
+.buttonSendEmail {
+  width: 100%;
+}
+.Checkouts div {
+  font-weight: bold;
+}
+
+@media screen and (max-width: 1300px) {
+  .grid-container {
+    grid-template-columns: auto auto auto;
+    grid-gap: 20px;
+    padding: 30px;
+  }
+  .pictures {
+    width: 170px;
+  }
+  .pictures img {
+    max-width: 100%;
+    width: 100%;
+    height: 120px;
+  }
+  .pictures p {
+    font-size: 23px;
+    font-weight: bold;
+  }
+}
+@media screen and (max-width: 1060px) {
+  .grid-container {
+    grid-template-columns: auto auto;
+    grid-gap: 20px;
+    padding: 30px;
+  }
+  .item-b {
+    font-size: 15px;
+  }
+  .item-cPrice p {
+    font-size: 15px;
+  }
+  /* Navbar */
+  .homeSide {
+    padding: 0 !important;
+  }
+
+  /* Aside */
+  .orderboxes {
+    height: 75px;
+    grid-template-rows: 65% 35%;
+    grid-template-columns: 25% 5% 10% 10% 10% 5%;
+    grid-template-areas:
+      'itema . itemb itemb itemb itemb itemc'
+      'itema . itemd iteme itemf . itemc';
+  }
+  .item-d button img {
+    padding-bottom: 5px;
+    width: 20px;
+    height: auto;
+  }
+  .item-e {
+    max-width: 100%;
+    height: auto;
+    box-sizing: none;
+  }
+
+  .item-e h5 {
+    font-size: 20px;
+  }
+  .item-f button img {
+    padding-bottom: 5px;
+    width: 20px;
+    height: auto;
+  }
+  /* orderbox */
+  .total {
+    font-size: 15px;
+  }
+  .totalnumber {
+    font-size: 15px;
+  }
+  .ppn {
+    font-size: 13px;
+  }
+}
+@media screen and (max-width: 950px) {
+  .item-b p {
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .orderboxes {
+    height: 70px;
+    grid-template-rows: 65% 35%;
+    grid-template-columns: 30% 5% 10% 10% 10% 5%;
+    grid-template-areas:
+      'itema . itemb itemb itemb itemb itemc'
+      'itema . itemd iteme itemf . itemc';
+  }
+  .item-cPrice p {
+    font-size: 13px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .firstColumn {
+    box-shadow: none;
+    border-bottom: 2px solid whitesmoke;
+  }
+  /* cart */
+  .myCart {
+    font-size: 30px;
+    padding-top: 0;
+  }
+
+  /* main */
+  .grid-container {
+    grid-template-columns: auto auto auto;
+    grid-gap: 20px;
+    padding: 30px;
+  }
+  .pictures {
+    width: 150px;
+  }
+  .pictures img {
+    max-width: 100%;
+    width: 100%;
+    height: 120px;
+  }
+  .pictures p {
+    font-size: 23px;
+    font-weight: bold;
+  }
+
+  .orderboxes {
+    height: 90px;
+    grid-template-rows: 65% 35%;
+    grid-template-columns: 20% 5% 10% 10% 10% 5%;
+    grid-template-areas:
+      'itema . itemb itemb itemb itemb itemc'
+      'itema . itemd iteme itemf . itemc';
+  }
+  .item-b p {
+    font-size: 20px;
+  }
+
+  .item-cPrice p {
+    font-size: 20px;
+  }
+  .item-d button img {
+    padding-bottom: 0px;
+    width: 20px;
+    height: auto;
+  }
+  .item-f button img {
+    padding-bottom: 0px;
+    width: 20px;
+    height: auto;
+  }
+  .total {
+    font-size: 25px;
+  }
+  .totalnumber {
+    font-size: 25px;
+  }
+  .ppn {
+    font-size: 23px;
+  }
+
+  /* navbar */
+  .sideHome {
+    box-shadow: none;
+    border-top: 2px solid whitesmoke;
+    border-bottom: 2px solid whitesmoke;
+    grid-template-columns: auto auto auto;
+    grid-row-gap: 30px;
+    align-content: space-between;
+    padding-top: 0;
+  }
+
+  .homeSide {
+    text-align: center;
+  }
+
+  .homeSide img {
+    max-width: 100%;
+    width: 50px;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .grid-container {
+    grid-template-columns: auto auto;
+    grid-gap: 20px;
+    padding: 30px;
+  }
+  .firstColumn {
+    width: 100%;
+    max-width: 100%;
+    height: 70px;
+    padding-top: 10px;
+  }
+  .firstRow {
+    display: flex;
+    flex-direction: column;
+  }
+  .foodItems {
+    width: auto !important;
+    text-align: center;
+    overflow: auto;
+    max-width: 100%;
+    height: auto;
+  }
+  .foodItems h2 {
+    font-size: 30px;
+  }
+  .homeButton {
+    width: 100px !important;
+    text-align: center;
+    padding-top: 5px;
+  }
+  .searchButton {
+    width: 100px !important;
+    text-align: center;
+    padding-top: 5px;
+  }
+  .orderboxes {
+    height: 90px;
+    grid-template-rows: 65% 35%;
+    grid-template-columns: 25% 5% 10% 10% 10% 5%;
+    grid-template-areas:
+      'itema . itemb itemb itemb itemb itemc'
+      'itema . itemd iteme itemf . itemc';
+  }
+  .item-b {
+    font-size: 15px;
+  }
+
+  .item-cPrice p {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .item-b p {
+    font-size: 13px;
+  }
+}
+@media screen and (max-width: 430px) {
+  .orderboxes {
+    height: 90px;
+    grid-template-rows: 65% 35%;
+    grid-template-columns: 30% 5% 10% 10% 10% 5%;
+    grid-template-areas:
+      'itema . itemb itemb itemb itemb itemc'
+      'itema . itemd iteme itemf . itemc';
+  }
+  .item-cPrice p {
+    font-size: 15px;
+  }
+  .searchButton {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+@media screen and (max-width: 330px) {
+  .orderboxes {
+    height: 90px;
+    grid-template-rows: 65% 35%;
+    grid-template-columns: 35% 3% 10% 10% 10% 3%;
+    grid-template-areas:
+      'itema . itemb itemb itemb itemb itemc'
+      'itema . itemd iteme itemf . itemc';
+  }
+  .foodItems h2 {
+    font-size: 20px;
+  }
+  .item-cPrice p {
+    font-size: 13px;
+  }
+  .total {
+    font-size: 20px;
+  }
+  .totalnumber {
+    font-size: 20px;
+  }
+  .ppn {
+    font-size: 17px;
+  }
+  .cardTitlePrice {
+    font-size: 15px;
+  }
+}
