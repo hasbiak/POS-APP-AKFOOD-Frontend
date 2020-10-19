@@ -51,6 +51,11 @@
   grid-template-rows: 40% 20% 40%;
   padding: 10px;
   text-align: left;
+  background: linear-gradient(
+    278.29deg,
+    #29dfff 30.05%,
+    rgba(41, 223, 255, 0) 133.19%
+  );
   box-shadow: drop-shadow(10px 15px 10px rgba(41, 223, 255, 0.25));
   border-radius: 10px;
   position: relative;

@@ -69,7 +69,7 @@
             <b-button
               class="buttonYesDel"
               pill
-              variant="succes"
+              variant="success"
               @click="handleLogout(), $bvModal.hide('modal-logout')"
               >Yes</b-button
             >

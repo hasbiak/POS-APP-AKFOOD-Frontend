@@ -30,7 +30,7 @@ Akfood is a point of sale web application build with Vue JS, Akfood Application 
 4. Add .env file at root folder project
 
 ```sh
-# VUE_APP_URL = https://backend-akfood.fwdev.online
+VUE_APP_URL = VUE_APP_URL = http://localhost:3001
 ```
 
 5. Type `npm run serve`
